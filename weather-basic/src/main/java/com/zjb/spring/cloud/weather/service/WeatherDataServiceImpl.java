@@ -25,7 +25,7 @@ public class WeatherDataServiceImpl implements WeatherDataService{
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherDataServiceImpl.class);
 
-    private static final long TIME_OUT = 10L;
+    private static final long TIME_OUT = 1800L;
 
     @Autowired
     private RestTemplate restTemplate;
