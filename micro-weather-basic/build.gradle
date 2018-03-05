@@ -1,9 +1,10 @@
 buildscript {
 	ext {
 		springBootVersion = '2.0.0.M4'
+//		springBootVersion = '1.5.10'
 	}
 	repositories {
-		//mavenCentral()
+//		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
 		maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
@@ -23,7 +24,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	//mavenCentral()
+//	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
 	maven { url "http://maven.aliyun.com/nexus/content/groups/public/"}
@@ -31,10 +32,13 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
+	compile 'org.springframework.boot:spring-boot-starter-web'
 
 	//httpclient
 	compile 'org.apache.httpcomponents:httpclient:4.5.5'
 
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	//Redis
+	compile 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
