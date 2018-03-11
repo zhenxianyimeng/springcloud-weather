@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2018/3/4.
  */
 @Service
-public class WeatherDataServiceImpl implements WeatherDataService{
+public class WeatherDataServiceImpl implements WeatherDataService {
 
     private static final String WEATHER_URI = "http://wthrcdn.etouch.cn/weather_mini?";
 
@@ -47,25 +47,40 @@ public class WeatherDataServiceImpl implements WeatherDataService{
 
     @Override
     public void SyncDataByCityId(String cityId) {
-
+        String uri = WEATHER_URI + "citykey=" + cityId;
+        this.saveWeatherData(uri);
     }
 
-    private WeatherResponse doGetWeather(String uri){
+    private void saveWeatherData(String uri) {
+        String key = uri;
+        String strBody = null;
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+
+        ResponseEntity<String> respString = restTemplate.getForEntity(uri, String.class);
+
+        if (respString.getStatusCodeValue() == 200) {
+            strBody = respString.getBody();
+        }
+
+        ops.set(key, strBody, TIME_OUT, TimeUnit.SECONDS);
+    }
+
+    private WeatherResponse doGetWeather(String uri) {
         String key = uri;
         String strBody = null;
         WeatherResponse weather = null;
         ObjectMapper mapper = new ObjectMapper();
         ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
 
-        if(stringRedisTemplate.hasKey(key)){
+        if (stringRedisTemplate.hasKey(key)) {
             logger.info("Redis has data");
             strBody = ops.get(key);
-        }else {
+        } else {
             logger.info("Redis don't has data");
 
             ResponseEntity<String> respString = restTemplate.getForEntity(uri, String.class);
 
-            if(respString.getStatusCodeValue() == 200){
+            if (respString.getStatusCodeValue() == 200) {
                 strBody = respString.getBody();
             }
             ops.set(key, strBody, TIME_OUT, TimeUnit.SECONDS);
@@ -73,8 +88,8 @@ public class WeatherDataServiceImpl implements WeatherDataService{
 
         try {
             weather = mapper.readValue(strBody, WeatherResponse.class);
-        }catch (IOException e){
-            logger.error("Error",e);
+        } catch (IOException e) {
+            logger.error("Error", e);
         }
         return weather;
     }
