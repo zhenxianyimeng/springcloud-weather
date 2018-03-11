@@ -45,6 +45,11 @@ public class WeatherDataServiceImpl implements WeatherDataService{
         return doGetWeather(uri);
     }
 
+    @Override
+    public void SyncDataByCityId(String cityId) {
+
+    }
+
     private WeatherResponse doGetWeather(String uri){
         String key = uri;
         String strBody = null;
