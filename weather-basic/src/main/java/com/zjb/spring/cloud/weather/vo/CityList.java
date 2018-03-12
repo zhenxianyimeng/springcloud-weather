@@ -1,9 +1,6 @@
 package com.zjb.spring.cloud.weather.vo;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,7 +13,7 @@ import java.util.List;
 public class CityList implements Serializable {
     private static final long serialVersionUID = -7374741733213774184L;
 
-    @XmlAttribute(name = "d")
+    @XmlElement(name = "d")
     private List<City> cityList;
 
     public List<City> getCityList() {
