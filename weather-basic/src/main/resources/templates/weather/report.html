@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>天气预报</title>
+</head>
+<body>
+<h3 th:text="${reportModel.title}"></h3>
+<select>
+    <option th:each="city : ${reportModel.cityList}"
+            th:value="${city.cityId}" th:text="${city.cityName}"
+            th:selected="${city.cityId eq reportModel.cityId}"></option>
+</select>
+<h1 th:text="${reportModel.report.city}"></h1>
+<p>
+    空气质量指数：<span th:text="${reportModel.report.aqi}"></span>
+</p>
+<p>
+    当前温度：<span th:text="${reportModel.report.wendu}"></span>
+</p>
+<p>
+    温馨提示：<span th:text="${reportModel.report.ganmao}"></span>
+</p>
+<p>
+    温馨提示：<span th:text="${reportModel.report.ganmao}"></span>
+</p>
+
+<div th:each="forecast : ${reportModel.report.forecast}">
+    <div>
+        <p th:text="${forecast.date}"></p>
+        <p th:text="${forecast.type}"></p>
+        <p th:text="${forecast.high}"></p>
+        <p th:text="${forecast.low}"></p>
+        <p th:text="${forecast.fengxiang}"></p>
+    </div>
+</div>
+</body>
+</html>
