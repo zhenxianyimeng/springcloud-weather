@@ -1,5 +1,6 @@
 package com.zjb.spring.cloud.weather.job;
 
+import com.zjb.spring.cloud.weather.service.CityClient;
 import com.zjb.spring.cloud.weather.service.WeatherDataCollectionService;
 import com.zjb.spring.cloud.weather.vo.City;
 import org.quartz.JobExecutionContext;
@@ -22,6 +23,9 @@ public class WeatherDataSyncJob extends QuartzJobBean{
     private final static Logger logger = LoggerFactory.getLogger(WeatherDataSyncJob.class);
 
     @Autowired
+    private CityClient cityClient;
+
+    @Autowired
     private WeatherDataCollectionService weatherDataCollectionService;
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -30,10 +34,11 @@ public class WeatherDataSyncJob extends QuartzJobBean{
         List<City> cityList = null;
 
         try {
-            cityList = new ArrayList<>();
-            City city = new City();
-            city.setCityId("101280601");
-            cityList.add(city);
+            cityList = cityClient.listCity();
+//            cityList = new ArrayList<>();
+//            City city = new City();
+//            city.setCityId("101280601");
+//            cityList.add(city);
         } catch (Exception e) {
             logger.error("Exception!",e);
         }

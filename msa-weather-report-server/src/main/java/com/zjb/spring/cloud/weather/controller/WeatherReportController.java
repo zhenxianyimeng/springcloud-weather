@@ -1,5 +1,6 @@
 package com.zjb.spring.cloud.weather.controller;
 
+import com.zjb.spring.cloud.weather.service.CityClient;
 import com.zjb.spring.cloud.weather.service.WeatherReportService;
 import com.zjb.spring.cloud.weather.vo.City;
 import org.slf4j.Logger;
@@ -26,6 +27,9 @@ public class WeatherReportController {
     private final Logger logger = LoggerFactory.getLogger(WeatherReportController.class);
 
     @Autowired
+    private CityClient cityClient;
+
+    @Autowired
     private WeatherReportService weatherReportService;
 
     @GetMapping("/cityId/{cityId}")
@@ -36,11 +40,11 @@ public class WeatherReportController {
         List<City> cityList = null;
 
         try {
-            cityList = new ArrayList<>();
-            City city = new City();
-            city.setCityId("101280601");
-            city.setCityName("深圳");
-            cityList.add(city);
+            cityList = cityClient.listCity();
+//            City city = new City();
+//            city.setCityId("101280601");
+//            city.setCityName("深圳");
+//            cityList.add(city);
         } catch (Exception e) {
             logger.error("Exception!",e);
         }
