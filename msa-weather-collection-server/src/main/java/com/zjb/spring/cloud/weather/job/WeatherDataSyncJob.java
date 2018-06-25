@@ -8,7 +8,10 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,9 @@ import java.util.List;
  * @author zjb
  * @date 2018/3/8.
  */
-public class WeatherDataSyncJob extends QuartzJobBean{
+@Component
+@EnableScheduling
+public class WeatherDataSyncJob{
 
     private final static Logger logger = LoggerFactory.getLogger(WeatherDataSyncJob.class);
 
@@ -27,8 +32,9 @@ public class WeatherDataSyncJob extends QuartzJobBean{
 
     @Autowired
     private WeatherDataCollectionService weatherDataCollectionService;
-    @Override
-    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+
+    @Scheduled(fixedRate = 18_000)
+    private void executeInternal(){
         logger.info("Weather Data Sync Job. Start");
         //TODO 改用城市数据微服务提供
         List<City> cityList = null;

@@ -1,7 +1,7 @@
 package com.zjb.spring.cloud.weather.service;
 
 import com.zjb.spring.cloud.weather.vo.City;
-import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
